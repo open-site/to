@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title> </title>
 </head>
 <body>
     <script>
-        // Get the current website link (URL)
+        // get the current website link
         var currentUrl = window.location.href;
 
-        // Check if the URL contains "open-site.github.io/to/?"
+        // check if the url contains "open-site.github.io/to/?"
         if (currentUrl.includes('open-site.github.io/to/?')) {
-            // Split the URL by the "?" character
+            // split the URL by the "?" character
             var parts = currentUrl.split('?');
 
-            // Get the part after the "?" (the URL to redirect to)
+            // get the part of the url that's after the "?"
             var redirectUrl = parts[1];
 
-            // Check if there is something after "?"
+            // check if there is something after the main URL
             if (redirectUrl) {
-                // Redirect to "https://" + whatever is after "?"
-                window.location.href = 'https://' + redirectUrl;
+                // fetch the html content of the target site
+                fetch('https://' + redirectUrl)
+                    .then(response => response.text())
+                    .then(html => {
+                        // create a temporary element to parse the html
+                        var tempElement = document.createElement('div');
+                        tempElement.innerHTML = html;
+
+                        // set title of current page to the title of where it's redirecting to
+                        document.title = tempElement.querySelector('title').textContent;
+
+                        // redirect to target location
+                        window.location.href = 'https://' + redirectUrl;
+                    })
             } else {
-                // Redirect to "https://example.com"
+				// redirect to creation site
                 window.location.href = 'https://open-site.github.io/create';
             }
         } else {
-            // Redirect to "https://example.com"
+            // redirect to creation site
             window.location.href = 'https://open-site.github.io/create';
         }
     </script>
