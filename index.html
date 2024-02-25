@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect</title>
+</head>
+<body>
+    <h1>Redirect to a link of your choice</h1>
+	<a>You can modify this link to make it redirect to anywhere you want.</br>
+	<a>Just add a question mark to the end of it, and then the URL of where you want to redirect to.</br>
+	<a href="?example.com">jsbookmarktools.github.io/to?example.com</a> ← like this.</p>
+
+	<a>Or try it out here:</br>
+	<input type="text" id="linkInput" placeholder="example.com">
+    <button id="createLinkButton">Create link</button>
+	<a></p>
+	<a>Pair this with </a><a href="https://sheeptester.github.io/javascripts/obfuscate-url.html" target="_blank">URL Obfuscator</a><a> to make your links harder to read.</br>
+	<a>(Use "barely" or "a bit" for a better result.)</a>
+	
+    <script>
+        // get the current website link
+        var currentUrl = window.location.href;
+
+        // check if it's the default link
+        if (currentUrl.includes('jsbookmarktools.github.io/to/?')) {
+            // split the text after the "?"
+            var parts = currentUrl.split('?');
+
+            // get the part after the "?" so it can redirect
+            var redirectUrl = parts[1];
+
+            // go to the link
+            window.location.href = 'https://' + redirectUrl;
+        }
+		// get references to the input field and a message element
+        const searchInput = document.getElementById('linkInput');
+        const searchButton = document.getElementById('createLinkButton');
+
+        // add an event listener to the button
+        searchButton.addEventListener('click', () => {
+            // get the value from the input field
+            const redirectToLink = linkInput.value;
+
+			var textarea = document.createElement('textarea');
+            // check if the input field is not empty
+            if (redirectToLink.trim() !== '') {
+				textarea.value = 'https://jsbookmarktools.github.io/to?' + redirectToLink;
+				// append the textarea to the body
+				document.body.appendChild(textarea);
+				// select the text inside the textarea
+				textarea.select();
+				// copy the selected text to the clipboard
+				document.execCommand('copy');
+				// remove the textarea from the body
+				document.body.removeChild(textarea);
+				// show user input link
+                alert(`Copied to clipboard:\n\nhttps:\/\/jsbookmarktools.github.io/to?${redirectToLink}`);
+            } else {
+				textarea.value = 'https://jsbookmarktools.github.io/to?example.com'
+				// append the textarea to the body
+				document.body.appendChild(textarea);
+				// select the text inside the textarea
+				textarea.select();
+				// copy the selected text to the clipboard
+				document.execCommand('copy');
+				// remove the textarea from the body
+				document.body.removeChild(textarea);
+                // show example link
+                alert('Copied to clipboard:\n\nhttps://jsbookmarktools.github.io/to?example.com');
+            }
+        });
+    </script>
+</body>
+</html>
